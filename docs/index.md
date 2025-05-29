@@ -23,6 +23,7 @@ I'm passionate about cloud technologies, especially **Microsoft Azure**, and I�
 | ✅ No. | Title | Topics |
 |--------|-------|--------|
 | 01 | [Manage Azure Identities and Governance](01_identity.md) | Entra ID, RBAC, Policy |
+| └─ | [🧾 Intro to Entra ID](../01_Manage_Identities_Governance/entra-id-introduction.md) | Background, evolution, cloud identity |
 | 02 | [Implement and Manage Storage](02_storage.md) | Blob, File, Tiers |
 | 03 | [Deploy and Manage Azure Compute Resources](03_compute.md) | VMs, VMSS, Availability |
 | 04 | [Configure and Manage Virtual Networking](04_networking.md) | VNets, NSG, Peering |
