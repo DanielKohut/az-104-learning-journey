@@ -23,6 +23,7 @@ Users can be created through different methods:
 | **Account Enabled** | Whether the account is active or disabled | True |
 
 > 🔒 **Note**: Passwords must meet tenant-defined password complexity policies. Whether the user must change the password at first login.
+> User creating using PowerShell required Password as a mini object, PasswordProfile and Nickname.
 
 ---
 
@@ -79,8 +80,28 @@ New-MgUser `
 
 ![image](https://github.com/user-attachments/assets/d5cc0b0f-ed6a-4b02-883e-575bbcf6d16a)
 
+| **Tool**                  | **Required Parameters**                                                                 | **Notes**                                                                 |
+|----------------------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Azure CLI**              | `--display-name`<br>`--password`<br>`--user-principal-name`                              | `MailNickname` is **auto-generated** from the UserPrincipalName.          |
+| **Microsoft Graph PowerShell** | `-DisplayName`<br>`-UserPrincipalName`<br>`-MailNickname`<br>`-PasswordProfile`             | `PasswordProfile` must include at least `Password`. No auto MailNickname. |
+| **Azure Portal (UI)**      | **Display Name**<br>**User Principal Name**<br>**Password (auto or custom)**                                | UI auto-generates MailNickname from username.                             |
 
+---
 
+### 🔹 Additional Notes
+- **Azure CLI** is lenient; it auto-generates `MailNickname` based on `UserPrincipalName` if not provided.
+- **PowerShell (Microsoft Graph SDK)** is strict; it **requires explicit `MailNickname`** and the `Password` inside a `PasswordProfile` hashtable.
+- **Azure Portal** auto-handles many fields behind the scenes, but **Name** and **Username** are mandatory.
+- **First-time Sign-In Password Change**:
+  - **CLI** and **Portal**: Automatically force password change on first sign-in.
+  - **PowerShell**: By default, `ForceChangePasswordNextSignIn` is **true** unless specified otherwise.
 
+---
 
-
+### 📚 Example Values
+| Parameter             | Example                                 |
+|------------------------|-----------------------------------------|
+| `DisplayName` / Name    | `Test Account`                              |
+| `UserPrincipalName`     | `testaccount@yourdomain.onmicrosoft.com`    |
+| `MailNickname`          | `testaccount`                               |
+| `PasswordProfile`       | `@{ Password = "Password123456@" }`     |
