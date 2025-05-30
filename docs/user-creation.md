@@ -53,6 +53,26 @@ Users can be created through different methods:
 
 ![image](https://github.com/user-attachments/assets/e899ddf8-5ecd-4355-8b93-1d29cbcc9827)
 
+## 🔧 3. Create a User via **PowerShell**
+
+> ⚡️ Ensure Micorosft Graph Module is installed and authenticated.
+> Install-Module Microsoft.Graph -Scope CurrentUser
+> Connect-MgGraph -Scopes "User.ReadWrite.All"
+
+📝 **Best Practice**: Make sure you have newer version of PowerShell like version V7.*, don`t use older V5.1.
+
+New-MgUser `
+  -DisplayName "User Created By PowerShell using Graph Module" `
+  -MailNickname "usercreatedbypowershell" `
+  -UserPrincipalName "usercreatedbypowershell@danikohutgmail.onmicrosoft.com" `
+  -PasswordProfile @{
+      Password = "Password123456@"
+    }
+
+![image](https://github.com/user-attachments/assets/ef280d1f-1a57-4c70-92fc-d4bb7b19a508)
+
+## 🔧 4. Create a User via **CLI or PowerShell using CloudShell**
+
 
 
 
