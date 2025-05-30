@@ -73,6 +73,14 @@ New-MgUser `
 
 ## 🔧 4. Create a User via **CLI or PowerShell using CloudShell**
 
+![image](https://github.com/user-attachments/assets/46c0bb44-4c91-4cd4-91ff-aeca051e05b4)
+
+# 👤 Users review on the portal
+
+![image](https://github.com/user-attachments/assets/d5cc0b0f-ed6a-4b02-883e-575bbcf6d16a)
+
+
+
 
 
 
