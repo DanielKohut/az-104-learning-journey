@@ -17,7 +17,7 @@ Users can be created through different methods:
 
 | Field | Description | Example |
 |------|-------------|---------|
-| **User Principal Name (UPN)** | Unique login name for the user (like an email address) | john.doe@yourtenant.onmicrosoft.com |
+| **User Principal Name (UPN)** | Unique login name for the user (like an email address) | teszt.account@yourtenant.onmicrosoft.com |
 | **Display Name** | Full name of the user | Test Account |
 | **Password** | Initial password (must meet complexity requirements) | P@ssw0rd1234 |
 | **Account Enabled** | Whether the account is active or disabled | True |
