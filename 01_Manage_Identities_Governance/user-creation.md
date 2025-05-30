@@ -46,6 +46,8 @@ Users can be created through different methods:
 
 ## 🔧 2. Create a User via **Azure CLI**
 
+[image](https://github.com/user-attachments/assets/e899ddf8-5ecd-4355-8b93-1d29cbcc9827)
+
 > ⚡️ Ensure Azure CLI is installed and authenticated (`az login`).
 
 <pre><font color="#26A269"><b>ubuntu@DanielKohut</b></font>:<font color="#12488B"><b>~</b></font>$ az ad user create --display-name &quot;User Created By CLI&quot; --password Password12345@ --user-principal-name usercreatedbycli@danikohutgmail.onmicrosoft.com
@@ -56,6 +58,4 @@ Users can be created through different methods:
 az ad user create --display-name "Test Account" \
                   --password "P@ssw0rd1234" \
                   --user-principal-name "testaccouunt@yourtenant.onmicrosoft.com" \
-
-![image](https://github.com/user-attachments/assets/e899ddf8-5ecd-4355-8b93-1d29cbcc9827)
 
