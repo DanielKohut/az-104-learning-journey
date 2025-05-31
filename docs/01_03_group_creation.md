@@ -58,6 +58,8 @@ There are two main types of groups:
 5. (Optional) Add members immediately.
 6. Click **Create**.
 
+![image](https://github.com/user-attachments/assets/4c64f079-0328-4c8c-8e3a-e420910125a7)
+
 ---
 
 ## 💻 2. Create a Group via **Azure CLI**
