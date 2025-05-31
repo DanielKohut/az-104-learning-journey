@@ -82,6 +82,9 @@ Important Parameters:
 ```
 ![image](https://github.com/user-attachments/assets/f691ced8-f638-4122-81f5-056519aab696)
 
+![image](https://github.com/user-attachments/assets/0b842679-4594-4650-ad45-803189e74774)
+
+
 🧩 3. Create a Group via Azure PowerShell
 ⚡️ Requires the Az module.
 
