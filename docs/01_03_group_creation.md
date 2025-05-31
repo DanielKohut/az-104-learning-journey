@@ -70,17 +70,17 @@ There are two main types of groups:
 ```bash
 az ad group create --display-name "Marketing Team" \
                    --mail-nickname "marketingteam" \
-                   --security-enabled true \
-                   --mail-enabled false
 
 Important Parameters:
 --display-name: Group name.
 
 --mail-nickname: Unique alias for the group.
 
---security-enabled: true for Security group.
+--security-enabled: true for Security group. /This function is no longer available by CLI/
 
---mail-enabled: false for Security groups, true for M365 groups (email-enabled).
+--mail-enabled: false for Security groups, true for M365 groups (email-enabled). /This function is no longer available by CLI/
+```
+![image](https://github.com/user-attachments/assets/f691ced8-f638-4122-81f5-056519aab696)
 
 🧩 3. Create a Group via Azure PowerShell
 ⚡️ Requires the Az module.
