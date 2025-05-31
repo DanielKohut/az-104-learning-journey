@@ -98,10 +98,3 @@ New-MgUser `
 
 ---
 
-### 📚 Example Values
-| Parameter             | Example                                 |
-|------------------------|-----------------------------------------|
-| `DisplayName` / Name    | `Test Account`                              |
-| `UserPrincipalName`     | `testaccount@yourdomain.onmicrosoft.com`    |
-| `MailNickname`          | `testaccount`                               |
-| `PasswordProfile`       | `@{ Password = "Password123456@" }`     |
