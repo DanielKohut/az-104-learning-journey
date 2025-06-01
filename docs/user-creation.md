@@ -72,6 +72,10 @@ New-MgUser `
 
 ![image](https://github.com/user-attachments/assets/ef280d1f-1a57-4c70-92fc-d4bb7b19a508)
 
+Using Linux/Ubuntu:
+
+![image](https://github.com/user-attachments/assets/82ae2564-dd5a-4527-9fde-3b853a6f1a83)
+
 ## 🔧 4. Create a User via **CLI or PowerShell using CloudShell**
 
 ![image](https://github.com/user-attachments/assets/46c0bb44-4c91-4cd4-91ff-aeca051e05b4)
