@@ -97,6 +97,10 @@ New-AzADGroup -DisplayName "Marketing Team" `
 
 📝 For Microsoft 365 Groups, set -MailEnabled $true and ensure licenses are assigned properly.
 
+NOTE: AZ modul doesn`t accept security and mail prefixs, they are no longer available via AZ module. The created account will be security account.
+
+![image](https://github.com/user-attachments/assets/229aaf28-9ab1-4ac4-9698-7a14c4d4a07c)
+
 🏢 4. Group Creation via Azure Entra Connect (On-Premises)
 In hybrid environments:
 
