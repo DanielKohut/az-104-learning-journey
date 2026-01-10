@@ -104,9 +104,159 @@ Vault backup = survivability and security.
 
 Archive = keep data safe for the long term.
 
+## 6. Azure Virtual Machine and Disks – Basics
+
+When you create an Azure Virtual Machine:
+
+- Azure **automatically creates a Managed OS Disk**
+- The VM **always runs from Managed Disks**
+- You do **NOT** need to create a Storage Account for normal VM operation
+
+### Important points
+- OS disk is mandatory
+- Data disks are optional
+- Managed Disks are fully handled by Azure
+
+The VM **never runs directly from a Storage Account**.
+
 ---
 
-## 6. How These Concepts Fit Together
+## 7. Managed Disks
 
-The same data can exist in multiple tiers, each serving a different purpose:
+**Managed Disk = the actual disk used by the VM**
+
+### Key characteristics
+- Bootable
+- Attach/detach to VMs
+- Snapshottable
+- Billable even when not attached
+
+Managed Disks are the final, production disks.
+
+---
+
+## 8. Disk Size Configuration
+
+You can configure disk size:
+
+- During VM creation
+- Later (only increase, never decrease)
+
+### Rules
+- Disk size can be increased
+- Disk size cannot be reduced
+- OS disk resize usually requires VM stop
+
+---
+
+## 9. Azure VM Restore – What Really Happens
+
+When an OS disk becomes corrupted, Azure **does NOT repair the existing disk**.
+
+Instead, Azure performs a **disk replacement**.
+
+---
+
+## 10. Restore Flow (Replace Existing)
+
+### Step-by-step process
+
+1. Backup data exists in the Recovery Services Vault
+2. A **temporary Staging Storage Account** is required
+3. Azure extracts the backup into the staging storage
+4. Azure **creates a NEW Managed Disk** from the backup
+5. The VM attaches to the new disk
+6. The original disk is detached
+
+### Restore flow
+Recovery Services Vault
+↓
+Staging Storage Account (temporary)
+↓
+New Managed Disk (final)
+↓
+Virtual Machine
+
+
+---
+
+## 11. What Is the Staging Storage Account?
+
+**Staging Storage Account = temporary working area**
+
+- Used only during restore
+- Holds unpacked backup data
+- Not used by the VM
+- Can be deleted after restore
+
+It is required because Azure cannot restore disks directly from the vault.
+
+---
+
+## 12. What Happens to the Old (Corrupted) Disk?
+
+After restore with **Replace existing**:
+
+- The original OS disk is **detached**
+- It becomes an independent resource
+- Azure does **not** delete it automatically
+
+### Important
+- Detached disks still incur storage costs
+- They are billed the same as attached disks
+
+---
+
+## 13. Cost Consideration – Detached Disks
+
+If you do nothing:
+- The detached disk remains
+- Storage cost continues indefinitely
+
+### Best practice after restore
+1. Verify the VM works correctly
+2. Decide to:
+   - Delete the old disk
+   - Snapshot it
+   - Keep it temporarily
+
+Unused disks are a common hidden cost.
+
+---
+
+## 14. Backup vs Site Recovery (High-Level)
+
+**Azure Backup**
+- Used for data recovery
+- Restore takes time
+- Suitable for VM corruption or deletion
+
+**Azure Site Recovery**
+- Used for disaster recovery
+- Requires pre-configuration
+- Enables fast failover during regional outages
+
+Backup = restore data  
+ASR = continue service
+
+---
+
+## 15. Exam Key Takeaways (AZ-104)
+
+- VMs run on Managed Disks, not Storage Accounts
+- Restore creates new disks, it does not fix old ones
+- Staging Storage Account is temporary
+- Detached disks are still billed
+- Disk size can be increased, not reduced
+- Backup is reactive, Site Recovery is proactive
+
+---
+
+## Final Summary
+
+Azure Backup restores data by rebuilding new managed disks from vault-stored backups using a temporary staging storage account.  
+The old disks remain detached and billable until manually removed.
+
+This design prioritizes safety, integrity, and recoverability.
+
 
