@@ -245,4 +245,140 @@ The number is **dynamic** and changes as resources are added or removed.
 > follows standard IPv4 CIDR rules, with Azure reserving five IP addresses per
 > subnet and dynamically allocating addresses to resources.
 
----
+## 14. Virtual Network Lab – Core Purpose
+
+[LAB 01 – Configure secure access to workloads with Azure virtual networking services](https://microsoftlearning.github.io/Configure-secure-access-to-workloads-with-Azure-virtual-networking-services/Instructions/Labs/LAB_01_virtual_networks.html)
+
+
+The purpose of this lab is to demonstrate how Azure Virtual Networks are used
+to securely connect workloads while controlling inbound and outbound traffic
+using layered network security.
+
+The lab focuses on:
+- Network isolation
+- Controlled access to resources
+- Secure traffic flow design
+- Practical use of VNets, subnets, public IPs, and NSGs
+
+
+## 15. Creating a Virtual Network and Address Space
+
+A Virtual Network defines the private IP address space for Azure resources.
+
+Key points:
+- VNets use CIDR notation (for example: 10.0.0.0/16)
+- The address space must be planned before deploying resources
+- VNets provide logical isolation between workloads
+
+Best practice:
+- Allocate a sufficiently large address space
+- Avoid resizing VNets after deployment if possible
+
+
+## 16. Subnets and Network Segmentation
+
+Subnets divide a Virtual Network into smaller logical segments.
+
+Why subnets are used:
+- Separate different workload tiers (web, app, database)
+- Apply security rules at scale
+- Support Azure services that require dedicated subnets
+
+Important rules:
+- Subnets must not overlap
+- A virtual machine must always be deployed into a subnet
+
+
+## 17. Network Security Groups (NSGs)
+
+A Network Security Group acts as a stateful firewall for Azure networking.
+
+NSGs can be associated with:
+- A subnet
+- A network interface (NIC)
+
+Rules are evaluated based on:
+- Priority (lower number = higher priority)
+- Source and destination
+- Port and protocol
+- Allow or deny action
+
+Default behaviour:
+- Inbound traffic is denied by default
+- Outbound traffic is allowed by default
+
+
+## 18. NSG Association – Subnet vs NIC
+
+Subnet-level NSG:
+- Applies to all resources in the subnet
+- Easier to manage
+- Recommended for most scenarios
+
+NIC-level NSG:
+- Applies to a single virtual machine
+- Used for exception-based rules
+
+If both are present:
+- Traffic must be allowed by both NSGs
+- The most restrictive rule takes effect
+
+
+## 19. Public IP and Private IP Usage
+
+Public IP addresses are used only for external access.
+
+Key concepts:
+- Virtual machines always communicate internally using private IPs
+- Azure performs NAT between public and private IP addresses
+- Having a public IP does not automatically allow inbound traffic
+
+
+## 20. Traffic Flow Through Azure Networking
+
+Typical inbound traffic flow:
+
+Internet
+→ Public IP
+→ NSG evaluation
+→ Virtual machine (private IP)
+
+If any NSG rule blocks traffic:
+- The connection fails
+- The resource is not reachable
+
+
+## 21. Security Principles Demonstrated in the Lab
+
+This lab reinforces core Azure security principles:
+- Least privilege (only required ports are opened)
+- Network segmentation using subnets
+- Defence in depth using multiple security layers
+- Secure-by-default networking behaviour
+
+
+## 22. Common Configuration Mistakes
+
+Common issues highlighted by the lab:
+- Forgetting to associate an NSG
+- Allowing overly broad inbound rules
+- Using public IPs unnecessarily
+- Deploying all workloads into a single subnet
+- Poor IP address planning
+
+
+## 23. Exam-Relevant Takeaways
+
+For AZ-104 exam preparation:
+- VNets provide logical network isolation
+- Subnets segment VNets into manageable units
+- NSGs control traffic at subnet and NIC level
+- Public IPs do not bypass NSG rules
+- Azure reserves five IP addresses per subnet
+
+
+## 24. One-Sentence Lab Summary
+
+This lab demonstrates how Azure Virtual Networks, subnets, public IPs, and
+Network Security Groups work together to securely control traffic using
+layered network security principles.
