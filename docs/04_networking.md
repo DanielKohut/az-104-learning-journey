@@ -382,3 +382,204 @@ For AZ-104 exam preparation:
 This lab demonstrates how Azure Virtual Networks, subnets, public IPs, and
 Network Security Groups work together to securely control traffic using
 layered network security principles.
+
+
+## 25. User-Defined Routes (UDRs) and Traffic Steering
+
+Azure provides system routes by default to handle basic traffic flow.
+In some scenarios, traffic must be explicitly routed through a specific resource.
+
+This is achieved using User-Defined Routes (UDRs).
+
+A UDR allows you to:
+- Override Azure system routes
+- Control where traffic is sent
+- Forward traffic to a virtual appliance (firewall, IDS, proxy, inspection VM)
+
+Common use case:
+Routing all outbound or internal traffic through a network inspection VM.
+
+Example:
+Route: 0.0.0.0/0
+Next hop type: Virtual appliance
+Next hop address: Private IP of VM1
+
+This ensures all traffic flows through VM1 before reaching its destination.
+
+Important rules:
+- UDRs are associated with subnets
+- NSGs do not control routing
+- System routes cannot be modified
+
+
+## 26. System Routes vs User-Defined Routes
+
+Azure routing follows a defined precedence order.
+
+Route types:
+- System routes – Default Azure routing
+- User-defined routes – Custom traffic control
+- BGP routes – Dynamic routing via gateways
+
+Key rule:
+User-defined routes override system routes.
+
+If routing behaviour must change, UDRs are required.
+
+
+## 27. Load Balancers – Load Balancing vs NAT
+
+Azure Load Balancers support two distinct traffic patterns.
+
+Load Balancing Rules:
+- Used when one service is hosted on multiple backend VMs
+- Traffic is distributed across all healthy backends
+- Typical use cases: HTTP (80), HTTPS (443)
+
+Inbound NAT Rules:
+- Used when traffic must reach one specific VM
+- One-to-one mapping between public port and private port
+- Typical use cases: RDP (3389), SSH (22)
+
+Example:
+PublicIP:3389 → VM3:3389
+
+Inbound NAT rules do not distribute traffic.
+
+
+## 28. Network Gateways – Purpose and Function
+
+A network gateway is used to connect separate networks.
+
+Gateways are required for:
+- Site-to-Site VPN
+- Point-to-Site VPN
+- VNet-to-VNet connections
+- ExpressRoute
+
+Gateways are not used for internal VNet traffic.
+
+
+## 29. GatewaySubnet (Critical Exam Topic)
+
+Azure network gateways require a dedicated subnet named exactly:
+
+GatewaySubnet
+
+Key rules:
+- Must be named GatewaySubnet
+- Must not contain other resources
+- Used exclusively by the gateway
+- IP usage is dynamic
+
+Best practice:
+- Use /27 or larger
+- Avoid very small subnets
+
+
+## 30. Local Network Gateway (On-Premises Definition)
+
+The Local Network Gateway represents the on-premises network in Azure.
+
+It contains:
+- Public IP address of the on-premises VPN device
+- On-premises internal IP address range
+
+Important distinction:
+- IP address refers to the VPN device public IP
+- Address space refers to the on-prem internal network range
+
+Example:
+Public IP:      12.12.79.10
+Address space:  10.112.1.0/24
+
+The Local Network Gateway is not an Azure gateway.
+It is a logical representation of the remote network.
+
+
+## 31. Azure App Service and Virtual Networks
+
+Azure App Services are not deployed inside VNets by default.
+
+To allow an App Service to access:
+- Virtual machines
+- Databases
+- Private endpoints
+
+VNet Integration must be configured.
+
+Key points:
+- Enables outbound access from the App Service to the VNet
+- Uses private IP connectivity
+- Does not expose inbound traffic to the App Service
+
+This is required when a web app must connect to backend resources using private IPs.
+
+
+## 32. Azure Files vs Blob Storage (Networking Perspective)
+
+Azure provides multiple storage services with different access models.
+
+Azure Blob Storage:
+- Accessed via HTTP or HTTPS
+- Uses public or private endpoints
+- Ideal for web content and unstructured data
+
+Example:
+https://sa.blob.core.windows.net/container/object
+
+Azure File Share:
+- Accessed via SMB or NFS
+- Uses UNC paths
+- Behaves like a traditional file share
+
+Example:
+\\storageaccount.file.core.windows.net\share
+
+Key rule:
+UNC paths are only used with Azure File Shares.
+Blob storage is not mounted as a file share.
+
+
+## 33. Azure File Share Networking Model
+
+An Azure File Share:
+- Is hosted inside a storage account
+- Requires authentication (keys, SAS, or Azure AD)
+- Can be accessed via public or private endpoints
+
+The storage account does not expose files directly.
+The file share is the actual network-accessible resource.
+
+
+## 34. Network Watcher – Performance vs Connectivity
+
+Azure Network Watcher provides multiple diagnostic tools.
+
+Key distinctions:
+- IP flow verify – Checks NSG allow or deny decisions
+- Connection troubleshoot – One-time connectivity test
+- Connection monitor – Continuous monitoring, RTT, latency
+- NSG flow logs – Traffic metadata logging
+
+If average round-trip time (RTT) or latency is required:
+Connection Monitor must be used.
+
+
+## 35. Exam Mental Model – Routing and Security
+
+Keep these responsibilities clearly separated:
+
+Routing     → User-Defined Routes
+Security    → Network Security Groups
+Access      → Public IP and NAT
+Monitoring  → Network Watcher
+
+Mixing these concepts is a common exam trap.
+
+
+## 36. One-Sentence Network Summary (Extended)
+
+Azure networking combines logical isolation, controlled routing, and layered
+security using VNets, subnets, NSGs, gateways, and user-defined routes to
+securely and efficiently control traffic flow.
