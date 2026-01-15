@@ -583,3 +583,48 @@ Mixing these concepts is a common exam trap.
 Azure networking combines logical isolation, controlled routing, and layered
 security using VNets, subnets, NSGs, gateways, and user-defined routes to
 securely and efficiently control traffic flow.
+
+## 37. VNet Peering – Same vs Different Regions
+
+VNet Peering allows virtual networks to communicate privately using Azure’s
+backbone network.
+
+Key characteristics:
+- Low latency and high bandwidth
+- Traffic stays on the Microsoft network
+- No VPN gateway required
+
+Important rules:
+- VNets must have non-overlapping address spaces
+- Peering works across regions (Global VNet Peering)
+- Peered VNets behave like one network for routing
+
+Traffic behaviour:
+- No transitive routing by default
+- Network Security Groups still apply
+- User-Defined Routes can influence peered traffic
+
+Common use case:
+Hub-and-spoke network architecture.
+
+
+## 38. Overlapping Address Spaces – Hard Limitation
+
+Azure does not allow communication between VNets that have overlapping IP
+address spaces.
+
+This rule applies regardless of:
+- Azure region
+- Subscription
+- Tenant
+
+If VNets have overlapping address spaces:
+- VNet peering is not possible
+- VPN or ExpressRoute connections will not work
+
+Overlapping address spaces are allowed only when:
+- VNets are completely isolated
+- No connectivity is ever required
+
+Exam rule:
+If VNets must communicate, address spaces must not overlap.
