@@ -626,5 +626,22 @@ Overlapping address spaces are allowed only when:
 - VNets are completely isolated
 - No connectivity is ever required
 
+### NSG Priority and Default Rules – Key Behaviour
+
+- NSG rules are evaluated from lowest to highest priority number
+- The first matching rule determines the action
+- Azure provides default inbound rules
+
+Default inbound rules include:
+- AllowVnetInBound (65000)
+- AllowAzureLoadBalancerInBound (65001)
+- DenyAllInBound (65500)
+
+When a VM is behind an Azure Load Balancer:
+- The VM sees the source as AzureLoadBalancer
+- If no higher-priority deny rule exists, inbound traffic is allowed
+  by the default AllowAzureLoadBalancerInBound rule
+
+
 Exam rule:
 If VNets must communicate, address spaces must not overlap.
