@@ -645,3 +645,196 @@ When a VM is behind an Azure Load Balancer:
 
 Exam rule:
 If VNets must communicate, address spaces must not overlap.
+
+## 39. Well-Known Ports – Web and Internet Services
+
+These ports are required for hosting and accessing web applications in Azure.
+
+HTTP (Port 80):
+- Used for unencrypted web traffic
+- Commonly redirected to HTTPS
+- Used by load balancers and App Services
+
+HTTPS (Port 443):
+- Used for encrypted web traffic (TLS/SSL)
+- Required for Azure Portal, ARM API, Storage, and most PaaS services
+- Most critical port in Azure environments
+
+Exam tip:
+Web applications typically require **80 and 443**, but production systems
+should allow **443 only**.
+
+
+## 40. DNS – Name Resolution (Critical Exam Topic)
+
+DNS is required for almost all Azure services.
+
+DNS uses:
+- Port 53 UDP (standard queries)
+- Port 53 TCP (large responses and zone transfers)
+
+Important rule:
+DNS is **not UDP-only**. Both UDP and TCP must be considered.
+
+Exam tip:
+If DNS traffic is blocked, most Azure services will fail to connect.
+
+
+## 41. Remote Access Ports (VM Administration)
+
+These ports allow administrators to manage virtual machines.
+
+SSH (Port 22 TCP):
+- Used for Linux VM administration
+- Also used by SFTP
+
+RDP (Port 3389 TCP):
+- Used for Windows VM administration
+
+Best practice:
+Do not expose these ports directly to the internet.
+Use Azure Bastion or restrict access via NSGs.
+
+
+## 42. File and Storage Access Ports
+
+These ports are required for file sharing and storage access.
+
+SMB (Port 445 TCP):
+- Used by Windows File Shares
+- Required for Azure Files
+- Must be allowed outbound for Azure Files access
+
+NFS (Port 2049 TCP/UDP):
+- Used for Linux file shares
+- Supported by Azure Files (premium)
+
+Exam tip:
+Azure File Shares require **port 445**, not HTTP/HTTPS.
+
+
+## 43. FTP and Secure File Transfer
+
+FTP is still common in legacy systems.
+
+FTP (Port 21 TCP):
+- Control channel for FTP
+
+FTP Data:
+- Port 20 TCP (active mode)
+- Dynamic ports (passive mode)
+
+SFTP (Port 22 TCP):
+- Secure file transfer over SSH
+- Preferred over FTP
+
+Exam tip:
+FTP requires more than one port and is difficult to secure with NSGs.
+
+
+## 44. Email and Messaging Ports
+
+These ports are used for mail services and notifications.
+
+SMTP (Port 25 TCP):
+- Used for email delivery
+- Often blocked outbound by default in Azure
+
+SMTP Submission (Port 587 TCP):
+- Secure mail submission
+- Recommended alternative to port 25
+
+POP3 (Port 110 TCP) / POP3S (995 TCP):
+- Email retrieval
+
+IMAP (Port 143 TCP) / IMAPS (993 TCP):
+- Email synchronization
+
+Exam tip:
+Azure blocks outbound SMTP on port 25 by default.
+
+
+## 45. Database Ports (Common Exam Knowledge)
+
+Databases listen on vendor-specific ports.
+
+SQL Server: 1433 TCP  
+MySQL: 3306 TCP  
+PostgreSQL: 5432 TCP  
+Oracle: 1521 TCP  
+MongoDB: 27017 TCP  
+Redis: 6379 TCP  
+
+Exam tip:
+Database ports should be restricted to application subnets only.
+
+
+## 46. Identity and Directory Services
+
+These ports are used for authentication and directory services.
+
+LDAP: 389 TCP/UDP  
+LDAPS: 636 TCP  
+Kerberos: 88 TCP/UDP  
+Global Catalog: 3268 TCP  
+Global Catalog SSL: 3269 TCP  
+
+Used by:
+- Active Directory
+- Azure AD Domain Services
+- Hybrid identity scenarios
+
+
+## 47. Time, Monitoring, and Infrastructure Ports
+
+These ports support system-level services.
+
+NTP (Port 123 UDP):
+- Time synchronization
+- Critical for authentication and logging
+
+SNMP (Ports 161/162 UDP):
+- Monitoring and telemetry
+
+
+## 48. Azure-Specific Networking Port Summary
+
+Common Azure services require the following ports:
+
+Azure Portal / ARM / APIs:
+- 443 TCP
+
+Azure Load Balancer health probes:
+- Configurable, often HTTP/HTTPS
+
+Azure Bastion:
+- No inbound ports required on the VM
+
+Azure File Sync:
+- 443 TCP (control)
+- 445 TCP (file access)
+
+
+## 49. Exam Mental Model – Ports and NSGs
+
+Remember the following patterns:
+
+Web services     → 80 / 443  
+DNS              → 53 (UDP + TCP)  
+Linux admin      → 22  
+Windows admin    → 3389  
+File shares      → 445  
+Databases        → Vendor-specific  
+
+NSG rules:
+- Lowest priority number wins
+- First matching rule applies
+- Default DenyAllInBound blocks everything not explicitly allowed
+
+
+## 50. One-Sentence Ports Summary (Exam Ready)
+
+> Azure networking relies on well-known ports such as 80 and 443 for web traffic,
+> 53 for DNS, 22 and 3389 for VM administration, 445 for file sharing, and
+> vendor-specific ports for databases, all controlled using Network Security Groups.
+
