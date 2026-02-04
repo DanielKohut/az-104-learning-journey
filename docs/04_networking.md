@@ -832,9 +832,124 @@ NSG rules:
 - Default DenyAllInBound blocks everything not explicitly allowed
 
 
-## 50. One-Sentence Ports Summary (Exam Ready)
+## 50. One-Sentence Ports Summary
 
 > Azure networking relies on well-known ports such as 80 and 443 for web traffic,
 > 53 for DNS, 22 and 3389 for VM administration, 445 for file sharing, and
 > vendor-specific ports for databases, all controlled using Network Security Groups.
+
+## 51. Exam Mental Model – User-Defined Routes (UDRs)
+
+Remember the following routing principles:
+
+UDRs:
+- Override Azure system routes
+- Apply **only to the subnet they are associated with**
+- Affect **outbound traffic only**
+- Do not affect inbound traffic
+
+Routing precedence:
+- User-defined routes (UDR)
+- BGP routes
+- System routes
+
+Key rule:
+- If a UDR exists, Azure does **not** fall back to system routes
+
+
+## 52. What a UDR Actually Does
+
+A User-Defined Route tells Azure how to forward traffic **leaving a subnet**.
+
+A route consists of:
+- Destination address prefix
+- Next hop type
+- Next hop address (if required)
+
+Common next hop types:
+- Virtual appliance
+- Internet
+- Virtual network gateway
+- None (blackhole)
+
+Example:
+- Destination: `10.0.1.0/24`  
+- Next hop type: `Virtual appliance`  
+- Next hop address: `10.0.3.4`  
+
+Meaning:
+Traffic destined for `10.0.1.0/24` must pass through the virtual appliance at `10.0.3.4`.
+
+
+## 53. Virtual Appliance Routing Responsibility
+
+When using a virtual appliance as the next hop:
+
+Azure:
+- Delivers traffic to the appliance
+- Does not inspect or forward traffic further
+
+Virtual appliance VM must:
+- Have IP forwarding enabled on the NIC
+- Have routing enabled in the operating system
+- Handle forwarding and filtering itself
+
+Azure handles **delivery to the next hop only**.
+
+
+## 54. Subnet Scope of UDRs (Critical Exam Rule)
+
+UDRs are:
+- Not global
+- Not bidirectional
+
+UDRs apply only to:
+- Traffic originating from the subnet
+- Traffic matching the destination prefix
+
+UDRs do NOT apply to:
+- Traffic originating from other subnets
+- Traffic entering the subnet
+
+Example:
+- RT1 applied to Subnet1 and Subnet2
+- Subnet3 has no route table
+
+Result:
+- Subnet1 traffic follows the UDR
+- Subnet2 traffic follows the UDR
+- Subnet3 traffic uses Azure system routes
+
+
+## 55. UDR Failure Scenario
+
+If a UDR forces traffic through a virtual appliance and that appliance is unavailable:
+
+- Traffic from the subnet fails
+- Azure does not reroute traffic automatically
+- There is no fallback to system routes
+
+UDR-based designs can introduce a single point of failure
+unless high availability is implemented.
+
+
+## 56. Common UDR Use Cases
+
+Typical scenarios where UDRs are used:
+
+- Central firewall inspection
+- Forced tunneling to on-premises
+- IDS / IPS traffic inspection
+- Proxy-based internet access
+- Hub-and-spoke network architectures
+
+Traffic flow pattern:
+Subnet → UDR → Virtual appliance → Destination
+
+
+## 57. One-Sentence UDR Summary
+
+> User-Defined Routes allow explicit control over subnet egress traffic by
+> overriding Azure system routes and forcing traffic through specific next hops,
+> such as virtual appliances, with routing enforced only at the subnet level.
 
